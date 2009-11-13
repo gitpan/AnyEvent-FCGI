@@ -1,5 +1,16 @@
 package AnyEvent::FCGI::Connection;
 
+=head1 NAME
+
+AnyEvent::FCGI::Connection - a single connection handle for L<AnyEvent::FCGI>
+
+=head1 DESCRIPTION
+
+This module represents a single connection for L<AnyEvent::FCGI>
+This module would not be used directly by a program using C<AnyEvent::FCGI>.
+
+=cut
+
 use strict;
 use warnings;
 

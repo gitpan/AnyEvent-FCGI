@@ -1,4 +1,6 @@
 Revision history for Perl extension AnyEvent::FCGI.
 
+0.02  Fri Nov 13 13:42:11 2009
+	- minor pod fixes
 0.01  Thu Nov 12 00:11:52 2009
 	- original version

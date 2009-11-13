@@ -1,11 +1,8 @@
 package AnyEvent::FCGI::Request;
 
-use strict;
-use warnings;
-
 =head1 NAME
 
-C<FCGI::Async::Request> - a single FastCGI request handle for L<AnyEvent::FCGI>
+AnyEvent::FCGI::Request - a single FastCGI request handle for L<AnyEvent::FCGI>
 
 =head1 SYNOPSIS
 
@@ -44,6 +41,9 @@ rather, objects in this class are passed into the C<on_request> callback of
 the containing C<AnyEvent::FCGI> object.
 
 =cut
+
+use strict;
+use warnings;
 
 use Scalar::Util qw/weaken/;
 
