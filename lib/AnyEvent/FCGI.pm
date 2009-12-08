@@ -40,7 +40,7 @@ This module implements non-blocking FastCGI server for event based applications.
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Scalar::Util qw/weaken refaddr/;
 
@@ -87,9 +87,9 @@ The TCP port the FastCGI server will listen on.
 The TCP address of the FastCGI server will listen on.
 If undefined 0.0.0.0 will be used.
 
-=item unix => $path
+=item socket => $path
 
-Path to unix file socket to listen. If specified, C<host> and C<port> parameters ignored.
+Path to UNIX domain socket to listen. If specified, C<host> and C<port> parameters ignored.
 
 =item on_request => sub { }
 
@@ -115,9 +115,11 @@ sub new {
     my $fcgi = $self;
     weaken($fcgi);
     
+    $params{socket} ||= $params{unix};
+    
     $self->{server} = tcp_server(
-        $params{unix} ? 'unix/' : $params{host},
-        $params{unix} || $params{port},
+        $params{socket} ? 'unix/' : $params{host},
+        $params{socket} || $params{port},
         sub {$fcgi->_on_accept(shift)}
     );
     
@@ -151,6 +153,7 @@ sub DESTROY {
 =head1 SEE ALSO
 
 L<AnyEvent>, L<AnyEvent::FCGI::Request>
+
 This module based on L<FCGI::Async> and L<FCGI::EV>.
 
 =head1 LICENSE

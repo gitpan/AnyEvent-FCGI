@@ -278,14 +278,21 @@ This method can be used instead of C<print_stdout> and C<finish>.
 =cut
 
 sub respond {
-    my ($self, $content, %headers) = @_;
+    my ($self, $content, @headers) = @_;
     
     if ($self->is_active) {
-        $headers{Status} = 200 unless exists $headers{Status};
-        foreach my $header (keys %headers) {
-            $self->print_stdout("$header: $headers{$header}\n");
+        my $has_status;
+        my $output = '';
+        
+        while (scalar @headers) {
+            my $header = shift @headers;
+            $has_status = 1 if $header eq 'Status';
+            $output .= $header . ': ' . shift(@headers) . "\n";
         }
-        $self->print_stdout("\n$content");
+        $output .= "Status: 200 OK\n" unless $has_status;
+        $output .= "\n$content";
+        
+        $self->print_stdout($output);
         $self->finish;
     } else {
         warn 'Cannot respond to inactive request';
